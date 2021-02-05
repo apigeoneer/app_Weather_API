@@ -39,19 +39,29 @@ class MainActivity : AppCompatActivity() {
             val queue = Volley.newRequestQueue(this)
             val url = "https://www.metaweather.com/api/location/search/?query=london"
 
-
-            // Request a string response from the provided URL.
-            val stringRequest = StringRequest(
-                Request.Method.GET, url,
-                Response.Listener<String> { response ->
-                    Toast.makeText(this, response, Toast.LENGTH_LONG).show()
+            // Request a JSONArray response from the provided URL. (Standard request)
+            val request = JsonArrayRequest(Request.Method.GET, url, null,
+                Response.Listener<JSONArray> { response ->
+                    Toast.makeText(this, response.toString(), Toast.LENGTH_SHORT).show()
                 },
-                Response.ErrorListener {
+                Response.ErrorListener { error ->
                     Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
                 }
             )
-            // Add the request to the RequestQueue.
-            queue.add(stringRequest)
+            queue.add(request)
+
+//            // Request a string response from the provided URL. (Simple request)
+//            val stringRequest = StringRequest(
+//                Request.Method.GET, url,
+//                Response.Listener<String> { response ->
+//                    Toast.makeText(this, response, Toast.LENGTH_LONG).show()
+//                },
+//                Response.ErrorListener {
+//                    Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
+//                }
+//            )
+//            // Add the request to the RequestQueue.
+//            queue.add(stringRequest)
         }
 
         btnWeatherById.setOnClickListener {
