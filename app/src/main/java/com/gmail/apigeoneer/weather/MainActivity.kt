@@ -13,10 +13,14 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var cityId: String
+    private lateinit var cityInfo: JSONObject
     private lateinit var rvWeather: RecyclerView
     private lateinit var etCity: EditText
     private lateinit var btnCityById: Button
@@ -42,7 +46,13 @@ class MainActivity : AppCompatActivity() {
             // Request a JSONArray response from the provided URL. (Standard request)
             val request = JsonArrayRequest(Request.Method.GET, url, null,
                 Response.Listener<JSONArray> { response ->
-                    Toast.makeText(this, response.toString(), Toast.LENGTH_SHORT).show()
+                    try {
+                        cityInfo = response.getJSONObject(0)
+                        cityId = cityInfo.getString("woeid")
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                    Toast.makeText(this, "City ID: ${cityId}", Toast.LENGTH_SHORT).show()
                 },
                 Response.ErrorListener { error ->
                     Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
