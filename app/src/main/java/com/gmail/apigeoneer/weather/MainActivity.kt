@@ -39,8 +39,7 @@ class MainActivity : AppCompatActivity() {
         btnWeatherById = findViewById(R.id.weather_by_id_btn)
 
         btnCityById.setOnClickListener {
-            // Instantiate the RequestQueue.
-            val queue = Volley.newRequestQueue(this)
+
             val url = "https://www.metaweather.com/api/location/search/?query=" + etCity.text.toString()
 
             // Request a JSONArray response from the provided URL. (Standard request)
@@ -58,20 +57,8 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
                 }
             )
-            queue.add(request)
-
-//            // Request a string response from the provided URL. (Simple request)
-//            val stringRequest = StringRequest(
-//                Request.Method.GET, url,
-//                Response.Listener<String> { response ->
-//                    Toast.makeText(this, response, Toast.LENGTH_LONG).show()
-//                },
-//                Response.ErrorListener {
-//                    Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
-//                }
-//            )
-//            // Add the request to the RequestQueue.
-//            queue.add(stringRequest)
+            // Add a request (here, called request) to our RequestQueue.
+            MySingleton.getInstance(this).addToRequestQueue(request)
         }
 
         btnWeatherById.setOnClickListener {
