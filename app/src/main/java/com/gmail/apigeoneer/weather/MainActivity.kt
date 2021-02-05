@@ -7,6 +7,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONArray
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +35,23 @@ class MainActivity : AppCompatActivity() {
         btnWeatherById = findViewById(R.id.weather_by_id_btn)
 
         btnCityById.setOnClickListener {
-            Toast.makeText(this, "btnCityById clicked!", Toast.LENGTH_SHORT).show()
+            // Instantiate the RequestQueue.
+            val queue = Volley.newRequestQueue(this)
+            val url = "https://www.metaweather.com/api/location/search/?query=london"
+
+
+            // Request a string response from the provided URL.
+            val stringRequest = StringRequest(
+                Request.Method.GET, url,
+                Response.Listener<String> { response ->
+                    Toast.makeText(this, response, Toast.LENGTH_LONG).show()
+                },
+                Response.ErrorListener {
+                    Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
+                }
+            )
+            // Add the request to the RequestQueue.
+            queue.add(stringRequest)
         }
 
         btnWeatherById.setOnClickListener {
