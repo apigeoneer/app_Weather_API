@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         btnCityById.setOnClickListener {
             // Instantiate the RequestQueue.
             val queue = Volley.newRequestQueue(this)
-            val url = "https://www.metaweather.com/api/location/search/?query=london"
+            val url = "https://www.metaweather.com/api/location/search/?query=" + etCity.text.toString()
 
             // Request a JSONArray response from the provided URL. (Standard request)
             val request = JsonArrayRequest(Request.Method.GET, url, null,
